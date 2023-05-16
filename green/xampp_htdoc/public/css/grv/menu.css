@@ -1,0 +1,155 @@
+.menu {
+    left: 0px;
+    width: 220px;
+    height: 100vh;
+    max-height: 100vh;
+    background-color: #081f2b;
+    overflow-x: hidden;
+}
+
+
+/*.menu:hover{
+    width: 220px;
+    transition:all .5s ;
+}*/
+.menu-rwd {
+    display: none;
+    height: calc(100vh - 55px);
+}
+
+.menu-rwd li {
+    border-bottom: 1px rgb(0, 0, 0, .1) solid;
+}
+
+.menu-rwd li :last-child {
+    border-bottom: none;
+}
+
+.menu a,
+.menu .icon-link{
+    font-size: 1rem;
+    color: #ffffff;
+    width: 100%;
+    font-weight: normal;
+    align-items: center;
+    transition: all .1s;
+    border-bottom: 1px rgba(255, 255, 255, 0.048) solid;
+}
+.menu ul>li .icon-link{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 99;
+}
+
+
+.menu ul>li a:hover,
+.menu ul>li .icon-link:hover {
+    background-color: #878FC3;
+    /* color: #081f2b; */
+    transition: all .1s;
+}
+
+.menu p {
+    font-size: 1.2rem;
+}
+
+
+.menu ul::-webkit-scrollbar {
+    display: none;
+}
+
+.menu ul>li svg.arrow{
+    transform: rotate(-180deg);
+    width: 20%;
+    transition: all 0.3s ease;
+}
+
+.menu ul>li .Dropdown_item{
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -o-transition:all 0.5s ease;
+}
+
+.menu ul>li.showMenu .Dropdown_item{
+    padding: 0;
+    max-height: 200px;
+    transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -o-transition:all 0.5s ease;
+}
+
+.menu ul>li.showMenu svg.arrow{
+    transform: rotate(0deg);
+    transition: all 0.3s ease;
+}
+
+.menu ul>li .Dropdown_item li a{
+    padding-left: 40px;
+}
+
+
+.menu ul>li a:not([href]):not([tabindex]),
+a:not([href]):not([tabindex]):focus,
+a:not([href]):not([tabindex]):hover {
+    color: #ffffff;
+    text-decoration: none
+}
+
+@media screen and (max-width: 767px) {
+    .menu {
+        display: none;
+    }
+
+    .menu-rwd {
+        display: block;
+    }
+}
+
+.page_level{
+    background-color: #FFF;
+}
+
+.page_level .page_show{
+    padding: 9px 20px 2px;
+    margin-top: -10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.page_level .page_show .page_title{
+
+}
+
+.page_level .page_show .page_title .page_title_span{
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 1.125rem;
+    font-weight: bolder;
+}
+
+.page_level .page_show .page_title .page_title_arrow{
+    padding: 0px 4px;
+    width: auto;
+    font-size: 1.125rem;
+    margin-bottom: 5px;
+}
+
+.page_level .page_show .page_title .page_title_a{
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 1.125rem;
+    font-weight: bolder;
+    color: black;
+}
+
+.page_level .page_show .page_title .page_title_a:hover{
+    color:rgb(0, 60, 150);
+}
+
+
