@@ -221,12 +221,12 @@
                             <button class="btn btn-red rounded-pill" data-toggle="modal" data-target="#downloadModal"><span class="mx-2">匯出資料</span></button>
                             <button class="btn btn-blue rounded-pill" onclick='tableToExcel()'><span class="mx-2">匯出 Excel</span></button>
                         </div>
-                        
+
 
                     </div>
                     <div class="col-lg-12 table-style-invoice ">
                         <table id="search-billPayment">
-                            
+
                         </table>
                     </div>
 
@@ -389,7 +389,7 @@
                 HiddenDiv();
                 window.location = data
             },
-            error: function(XMLHttpRequest, textStatus) { 
+            error: function(XMLHttpRequest, textStatus) {
                 console.log(XMLHttpRequest.status);
                 console.log(XMLHttpRequest.readyState);
                 console.log(textStatus);
@@ -419,15 +419,15 @@
                 HiddenDiv();
                 window.location = data
             },
-            error: function(XMLHttpRequest, textStatus) { 
+            error: function(XMLHttpRequest, textStatus) {
                 console.log(XMLHttpRequest.status);
                 console.log(XMLHttpRequest.readyState);
                 console.log(textStatus);
-            
+
             }
         })
     }
-    
+
 </script>
 
 <script type="text/javascript">
@@ -781,12 +781,17 @@
         }
     }
 
+ //   function getNewBillPayment() {
+
+   //     data = "{{$billPayments}}"
+   //     data = data.replace(/[\n\r]/g, "")
+  //      data = JSON.parse(data.replace(/&quot;/g, '"'));
+   //     return data
+   // }
+
     function getNewBillPayment() {
-        
-        data = "{{$billPayments}}"
-        data = data.replace(/[\n\r]/g, "")
-        data = JSON.parse(data.replace(/&quot;/g, '"'));
-        return data
+        data = @json($billPayments);
+        return data;
     }
 
     function getNewProject() {
@@ -955,6 +960,7 @@
     }
 
     function setData(i) {
+        var span
         if (billPayments[i].status == 'waiting') {
             span = "<div class='progress' data-toggle='tooltip' data-placement='top' title='等待審核中'>" +
                 "<div class='progress-bar bg-danger' role='progressbar' style='width: 0%' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'>" +
@@ -979,7 +985,7 @@
                 "</div>"
         }
 
-        var UserName = billPayments[i].user['name'] 
+        var UserName = billPayments[i].user['name']
 
         if((billPayments[i].user['role']=='intern'||billPayments[i].user['role'] == 'manager')&&billPayments[i].intern_name != null){
             UserName = billPayments[i].intern_name
@@ -1091,7 +1097,7 @@
         remittancerNames = [] //初始化
 
         for (var i = 0; i < billPayments.length; i++) {
-            
+
             if (remittancerNames.indexOf(billPayments[i]['remittancer']) == -1) {
                 if (remittancerTemp != '') {
                     if (billPayments[i]['remittancer'].indexOf(remittancerTemp) != -1) {
@@ -1114,7 +1120,7 @@
     function setYear() {
         year = ''
         var years = [] //初始化
-        $("#select-year").val("");  
+        $("#select-year").val("");
         $("#select-year").empty();
         $("#select-year").append("<option value=''></option>");
 
@@ -1236,7 +1242,7 @@
     var remittancerOtherName = ""
     var other_review = ""
     //帳務
-    
+
 
 
     var remittancerOtherNames = []
@@ -1466,7 +1472,7 @@
 
     function getNewOtherBillPayment() {
         data = "{{$otherBillPayments}}"
-        
+
         data = data.replace(/[\n\r]/g, "")
         data = JSON.parse(data.replace(/&quot;/g, '"'));
         return data
@@ -1671,7 +1677,7 @@
             var petty = ''
         }
 
-        var UserName2 = other_billPayments[i].user['name'] 
+        var UserName2 = other_billPayments[i].user['name']
 
         if((other_billPayments[i].user['role']=='intern'||other_billPayments[i].user['role'] == 'manager')&&other_billPayments[i].intern_name != null){
             UserName2 = other_billPayments[i].intern_name

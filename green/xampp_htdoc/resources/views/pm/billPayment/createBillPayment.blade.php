@@ -28,7 +28,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <form name="billPaymentForm" action="create/review" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
@@ -43,7 +43,7 @@
                                     </select>
                                 </div>
                             </div>
-                            
+
                             @endif
 
                             <div class="col-lg-6 form-group">

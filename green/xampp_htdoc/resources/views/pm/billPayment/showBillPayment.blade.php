@@ -5,9 +5,9 @@
         <div class="page_title" id="page_title">
             <span class="page_title_span">款項管理</span>
             <i class="fas fa-chevron-right page_title_arrow"></i>
-            <a  href="/billPayment" class="page_title_a" >繳款單</a>
+            <a  href="/billPayments" class="page_title_a" >繳款單</a>
             <i class="fas fa-chevron-right page_title_arrow"></i>
-            <span class="page_title_span">{{$data['billPayment']['finished_id']}}</span>
+            <span class="page_title_span">{{$data['billPayments']['finished_id']}}</span>
         </div>
     </div>
 </div>

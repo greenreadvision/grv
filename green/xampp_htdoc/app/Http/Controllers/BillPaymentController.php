@@ -47,6 +47,7 @@ class BillPaymentController extends Controller
         $allUsers = User::orderby('user_id')->get();
         $ZipDir = storage_path("app/public/"."zip/");
         $fileNum = count(glob("$ZipDir/*.*"));
+
         foreach ($allUsers as $allUser) {
             if ($allUser->role != 'manager' && count($allUser->billPayments) != 0) {
                 array_push($users, $allUser);
@@ -54,15 +55,16 @@ class BillPaymentController extends Controller
         }
         $interns = Intern::orderby('intern_id')->get();
         $billPayments = BillPayment::orderby('created_at', 'desc')->with('project')->with('user')->get();
-        
+
         $otherBillPayments = OtherBillPayment::orderby('created_at', 'desc')->with('user')->get();
 
         $today = date("Y-m-d");
         foreach($billPayments as $billPayment){
+
             $Year = substr($billPayment->created_at,0,4);
             $Mouth =substr($billPayment->created_at,5,2);
             $Mouth = intval($Mouth);
-            $Mouth = $Mouth + 2; 
+            $Mouth = $Mouth + 2;
             if($Mouth > 12){
                 $Year = intval($Year);
                 $Year = $Year + 1;
@@ -84,17 +86,18 @@ class BillPaymentController extends Controller
                     }
                     if($billPayment->matched ==null){
                         $matched = User::find('GRV00002');
-                        $billPayment->matched = $matched->name;
+                        $billPayment->matched = $matched ->name;
                     }
                     $billPayment->save();
                 }
             }
         }
+
         foreach($otherBillPayments as $otherBillPayment){
             $Year = substr($otherBillPayment->created_at, 0,4);
             $Mouth =substr($otherBillPayment->created_at,5,2);
             $Mouth = intval($Mouth);
-            $Mouth = $Mouth + 2;  
+            $Mouth = $Mouth + 2;
             if($Mouth > 12){
                 $Year = intval($Year);
                 $Year = $Year + 1;
@@ -108,9 +111,9 @@ class BillPaymentController extends Controller
             } else {
                 $Mouth = strval($Mouth);
             }
-            
-            
-            
+
+
+
             if($otherBillPayment->status != 'delete' && $otherBillPayment->status != 'complete'){
                 if($today  >= $Year . '-'. $Mouth .'-10'){
                     $otherBillPayment->status = 'matched';
@@ -120,13 +123,13 @@ class BillPaymentController extends Controller
                     }
                     if($otherBillPayment->matched ==null){
                         $matched = User::find('GRV00002');
-                        $otherBillPayment->matched = $matched->name;    
+                        $otherBillPayment->matched = $matched->name;
                     }
                     $otherBillPayment->save();
                 }
             }
         }
-        
+
         return view('pm.billPayment.indexBillPayment', ['users' => $users, 'billPayments' => $billPayments, 'otherBillPayments' => $otherBillPayments,'ZipCount' => $fileNum, 'interns'=>$interns]);
     }
 
@@ -152,7 +155,7 @@ class BillPaymentController extends Controller
             }
         }
 
-        
+
         $interns = Intern::orderby('intern_id')->get();
 
         return view('pm.billPayment.createBillPayment')->with('data', ['projects' => $projects,  'bank' => $bank,  'rv' => $rv,  'grv' => $grv, 'grv2' => $grv2,'users' => $users, 'interns'=>$interns]);
@@ -185,7 +188,7 @@ class BillPaymentController extends Controller
             'receipt_file' => 'nullable|file',
             'detail_file' => 'nullable|file',
         ]);
-        
+
 
         //查看流水號相關變數
         $id = RandomId::getNewId($payment_ids);
@@ -195,7 +198,7 @@ class BillPaymentController extends Controller
         $max = 0;
         //查看流水號月份是否正確
         $check_id = (date('Y') - 1911) . date("m");
-        
+
 
         //設定最新流水編號
         foreach ($numbers->toArray() as $number) {
@@ -240,7 +243,7 @@ class BillPaymentController extends Controller
                 break;
         }
         $intern = '';
-        
+
         if(\Auth::user()->role =='manager'||'intern'){
             $intern = $request->input('intern_name');
             echo "<script>console.log($intern)</script>";
@@ -262,8 +265,8 @@ class BillPaymentController extends Controller
                 $detail_file_path = $request->detail_file->storeAs('billPayment_details', $finished_id.'_'.$request->detail_file->getClientOriginalName())    ;
             }
         }
-    
-        
+
+
         $post = billPayment::create([
             'payment_id' => $id,
             'user_id' => \Auth::user()->user_id,
@@ -287,13 +290,13 @@ class BillPaymentController extends Controller
 
 
 
-       
+
         $project_ids = BillPayment::select('project_id')->orderby('project_id')->distinct()->get();
         $billPayment_groups = [];
         foreach ($project_ids->toArray() as $project_id) {
             array_push($billPayment_groups, BillPayment::where('project_id', $project_id)->orderby('created_at', 'desc')->with('project')->get());
         }
-      
+
         $letter_ids = Letters::select('letter_id')->get()->map(function ($letter) {
             return $letter->letter_id;
         })->toArray();
@@ -353,11 +356,11 @@ class BillPaymentController extends Controller
                     $file = storage_path("app/" . $path[0] . "/" . $path[1]);
                     $relativeNameInZipFile = $item->finished_id . "_費用明細表_" .  $path[1];
                     $zip->addFile($file, $relativeNameInZipFile);
-                } 
+                }
             }
         }
         $zip->close();
-        return "download/" . "zip/" .  $today."_". $fileNum . '.zip';        
+        return "download/" . "zip/" .  $today."_". $fileNum . '.zip';
     }
 
     public function deleteZip(){
@@ -377,13 +380,13 @@ class BillPaymentController extends Controller
     {
         //
         $billPayment = BillPayment::find($billPayment_id);
-        
-        
+
+
         // $billPayment->content = BillPaymentController::replaceEnter(false, $billPayment->content);
         if ($billPayment->receipt_file != null) $billPayment->receipt_file = explode('/', $billPayment->receipt_file);
         if ($billPayment->detail_file != null) $billPayment->detail_file = explode('/', $billPayment->detail_file);
 
-        
+
         return view('pm.billPayment.showBillPayment')->with('data',['billPayment'=>$billPayment]);
     }
 
@@ -446,7 +449,7 @@ class BillPaymentController extends Controller
             'detail_file' => 'nullable|file',
         ]);
         if($billPayment->company_name != $request->input('company_name')){  //如果有更改公司
-            
+
             $billPayment_ids = BillPayment::select('billPayment_id')->get()->map(function ($billPayment) {
                 return $billPayment->billPayment_id;
             })->toArray();
@@ -498,7 +501,7 @@ class BillPaymentController extends Controller
             } else {
                 $var = sprintf("%03d", $i + 1);
             }
-            
+
             switch($request->input('company_name')){
                 case 'rv':
                     $finished_id = "BPAR" . (date('Y') - 1911) . substr($billPayment->created_at, 5, 2) . $var;
@@ -514,7 +517,7 @@ class BillPaymentController extends Controller
             }
 
             $intern = '';
-        
+
             if(\Auth::user()->role =='manager'||'intern'){
                 $intern = $request->input('intern_name');
                 echo "<script>console.log($intern)</script>";
@@ -566,19 +569,19 @@ class BillPaymentController extends Controller
                 }
             }
 
-            
+
         }
 
         return redirect()->route('billPayment.review', $billPayment_id)->with('data', ['billPayment' => $billPayment]);
         // BillPayment::where('billPayment_id', $billPayment_id)->updated_at = now();
-    
-        
+
+
 
         // if (!$request->input('receipt')){
         //     $event = BillPaymentEvent::where('billPayment_id', $billPayment_id)->get()[0];
         //     EventController::update($event->event_id, $request->input('receipt_date'));
         // }
-        
+
     }
     public function fix(Request $request, String $billPayment_id)
     {
@@ -633,7 +636,7 @@ class BillPaymentController extends Controller
             } else {
                 $var = sprintf("%03d", $i + 1);
             }
-            
+
             switch($request->input('company_name')){
                 case 'rv':
                     $finished_id = "BPAR" . (date('Y') - 1911) . substr($billPayment->created_at, 5, 2) . $var;
@@ -681,7 +684,7 @@ class BillPaymentController extends Controller
             'link' => route('billPayment.review', $billPayment_id),
         ];
         Mail::to($email)->send(new EventMail($maildata));
-        
+
         if ($request->hasFile('receipt_file')) {
             if ($request->receipt_file->isValid()) {
                 \Illuminate\Support\Facades\Storage::delete($billPayment->receipt_file);
@@ -692,7 +695,7 @@ class BillPaymentController extends Controller
         if ($request->hasFile('detail_file')) {
             if ($request->detail_file->isValid()) {
                 \Illuminate\Support\Facades\Storage::delete($billPayment->detail_file);
-                $billPayment->update(['detail_file' => $request->detail_file->storeAs('details',$request->detail_file->getClientOriginalName())]);                
+                $billPayment->update(['detail_file' => $request->detail_file->storeAs('details',$request->detail_file->getClientOriginalName())]);
             }
         }
 
@@ -721,7 +724,7 @@ class BillPaymentController extends Controller
         if ($billPayment->status == 'waiting') {
             $billPayment->status = 'waiting-fix';
             $billPayment->save();
-        } 
+        }
         $reviewer_data = User::find($billPayment->user_id);
         $email = '2421882aa@gmail.com';//$reviewer_data->email
         $maildata = [
