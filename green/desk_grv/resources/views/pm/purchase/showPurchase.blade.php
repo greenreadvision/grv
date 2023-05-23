@@ -415,7 +415,7 @@
                             <img src="{{ URL::asset('img/rv_logo.png') }}" height="50px">
                             <label style="font-size:xx-large;">閱野文創股份有限公司</label>
                             @else
-                            <img src="{{ URL::asset('img/rv_logo.png') }}" height="50px">
+                            <img src="{{ URL::asset('img/州道logo.png') }}" height="50px">
                             <label style="font-size:xx-large;">州道股份有限公司</label>
                             @endif
                         <h3 class="mb-3">採購單</h3>
