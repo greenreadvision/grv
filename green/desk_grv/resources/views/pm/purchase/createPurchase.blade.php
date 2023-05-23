@@ -47,7 +47,7 @@
 
                                         @endforeach
                                     </optgroup>
-                                    
+
                                     <optgroup label="綠雷德(舊)">
                                         @foreach($grv as $gr)
                                         @if($gr['name']!='其他')
@@ -62,7 +62,7 @@
                                         @endforeach
                                     </optgroup>
                                     <!-- @foreach ($projects as $project)
-                        
+
                                     @if($project['name']!='其他')
                                     <option value="{{$project['project_id']}}">{{$project['name']}}</option>
                                     @endif
@@ -71,6 +71,7 @@
                                         <option value="qs8dXg66gPm">綠雷德-其他</option>
                                         <option value="qs8dXg77gPm">閱野-其他</option>
                                         <option value="qs8dXg88gPm">綠雷德(舊)-其他</option>
+                                        <option value="qs8dXg99gPm">州道-其他</option>
                                     </optgroup>
                                 </select>
                             </div>
@@ -178,7 +179,7 @@
                                             <th class="px-2" width="25%"><label class="label-style col-form-label" for="note">備註</label></th>
                                         </tr>
                                     </thead>
-                                    
+
                                 </table>
 
                             </div>
@@ -261,7 +262,7 @@
 
     });
 
-   
+
 
     function list_table(){
         var parent = document.getElementById('Itemtable');
@@ -279,7 +280,7 @@
                     '</tr>'
             }
             else{
-                body.innerHTML = body.innerHTML + '<tr>' + 
+                body.innerHTML = body.innerHTML + '<tr>' +
                     '<th class="p-2"><button id="addItemButton" type="button" onclick="additem()" class="w-100 btn btn-green rounded-pill">+</button>' +
                     '<th class="p-2"><input autocomplete="off" type="text" id="content-' + i + '" name="content-'+ i + '" class="rounded-pill form-control{{ $errors->has("content-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("content-'+ i +'") }}"></th>' +
                     '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="quantity-'+ i + '" name="quantity-'+ i +'" class="rounded-pill form-control{{ $errors->has("quantity-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("quantity-'+ i +'") }}"></th>' +
@@ -288,7 +289,7 @@
                     '<th class="p-2"><input autocomplete="off" type="text" id="note-'+ i +'" name="note-'+ i +'" class="rounded-pill form-control{{ $errors->has("note-'+ i +'") ? " is-invalid" : "" }}" value="{{ old("note-'+ i +'") }}"></th>' +
                     '</tr>'
             }
-            
+
         }
         parent.appendChild(body);
     }
@@ -299,7 +300,7 @@
         $("#addItemButton").remove();
         item_num = item_num + 1;
         document.getElementById("item_total_num").value = item_num;
-        tr.innerHTML = '<tr>' + 
+        tr.innerHTML = '<tr>' +
             '<th class="p-2"><button id="addItemButton" type="button" onclick="additem()" class="w-100 btn btn-green rounded-pill">+</button>' +
             '<th class="p-2"><input autocomplete="off" type="text" id="content-' + item_num + '" name="content-'+ item_num + '" class="rounded-pill form-control{{ $errors->has("content-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("content-'+ item_num +'") }}"></th>' +
             '<th class="p-2"><input oninput="value=value.replace(/[^\d]/g,"")" onkeyup="calculation()" autocomplete="off" type="text" id="quantity-'+ item_num + '" name="quantity-'+ item_num +'" class="rounded-pill form-control{{ $errors->has("quantity-'+ item_num +'") ? " is-invalid" : "" }}" value="{{ old("quantity-'+ item_num +'") }}"></th>' +
@@ -354,8 +355,8 @@
     function calculation() {
         console.log(texType)
         if (texType == 'untexed') {
-            
-            amount.value = Math.round(sum() * 100)/100  
+
+            amount.value = Math.round(sum() * 100)/100
             tex.value = Math.ceil(amount.value * 0.05)
             total_amount.value = Math.round(sum()) + Number(tex.value)
         }

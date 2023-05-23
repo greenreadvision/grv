@@ -251,7 +251,7 @@ class PurchaseController extends Controller
             'note' => 'nullable|string|min:1|max:500',
         ]);
 
-        
+
 
         $purchase->update($request->except('_method', '_token'));
         $purchase_item = PurchaseItem::where('purchase_id', $purchase_id)->get();
@@ -269,9 +269,9 @@ class PurchaseController extends Controller
                 $i++;
             }
         }
-        $item_total_num = $request->input('item_total_num'); 
+        $item_total_num = $request->input('item_total_num');
         for($j=count($purchase_item)+1 ; $j <= $item_total_num; $j++){
-              
+
             if ($request->input('content-' . $j) != null) {
                 PurchaseItem::create([
                     'purchase_id' => $purchase_id,
@@ -323,7 +323,7 @@ class PurchaseController extends Controller
             $item->purchase_id = null;
             $item->save();
         }
-        
+
         $purchase_delete->delete();
 
         return redirect()->route('purchase.index');

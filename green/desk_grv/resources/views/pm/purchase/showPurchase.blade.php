@@ -108,7 +108,7 @@
                             @elseif($invoice['company_name']=='grv_2')
                             <img src="{{ URL::asset('img/綠雷德創新logo.png') }}" height="50px">
                             <label style="font-size:xx-large;">綠雷德創新股份有限公司</label>
-                            @else
+                            @elseif($invoice['company_name']=='rv')
                             <img src="{{ URL::asset('img/rv_logo.png') }}" height="50px">
                             <label style="font-size:xx-large;">閱野文創股份有限公司</label>
                             @endif
@@ -411,9 +411,12 @@
                             @elseif($purchase['company_name']=='grv_2')
                             <img src="{{ URL::asset('img/綠雷德創新logo.png') }}" height="50px">
                             <label style="font-size:xx-large;">綠雷德創新股份有限公司</label>
-                            @else
+                            @elseif($purchase['company_name']=='rv')
                             <img src="{{ URL::asset('img/rv_logo.png') }}" height="50px">
                             <label style="font-size:xx-large;">閱野文創股份有限公司</label>
+                            @else
+                            <img src="{{ URL::asset('img/rv_logo.png') }}" height="50px">
+                            <label style="font-size:xx-large;">州道股份有限公司</label>
                             @endif
                         <h3 class="mb-3">採購單</h3>
                         <table width="100%" class="mb-3">

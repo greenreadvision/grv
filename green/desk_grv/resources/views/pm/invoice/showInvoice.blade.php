@@ -48,7 +48,7 @@
                                 <div class="w-100 text-center">
                                     @if(strpos(URL::full(),'other'))
                                         @if($data['invoice']['type'] =='other')
-                                            @if($data['invoice']['price'] >=3000 && $data['invoice']['price'] < 10000) 
+                                            @if($data['invoice']['price'] >=3000 && $data['invoice']['price'] < 10000)
                                                 <small>第二階段審核中 (1.列印紙本 2.主管簽名)</small>
                                             @elseif($data['invoice']['price'] >=10000)
                                                 <small>第二階段審核中 (1.列印紙本 2.執行長簽名)</small>
@@ -59,7 +59,7 @@
                                             <small>第二階段審核中</small>
                                         @endif
                                     @else
-                                        @if($data['invoice']['price'] >=3000 && $data['invoice']['price'] < 10000) 
+                                        @if($data['invoice']['price'] >=3000 && $data['invoice']['price'] < 10000)
                                             <small>第二階段審核中 (1.列印紙本 2.主管簽名)</small>
                                         @elseif($data['invoice']['price'] >=10000)
                                             <small>第二階段審核中 (1.列印紙本 2.執行長簽名)</small>
@@ -171,6 +171,9 @@
                             @elseif($data['invoice']['company_name']=='grv_2')
                             <img src="{{ URL::asset('img/綠雷德創新logo.png') }}" height="50px">
                             <label style="font-size:xx-large;">綠雷德創新股份有限公司</label>
+                            @else($data['invoice']['company_name']=='zd')
+                            <img src="{{ URL::asset('img/州道logo.png') }}" height="50px">
+                            <label style="font-size:xx-large;">州道股份有限公司</label>
                             @endif
 
                             <h3 class="mb-2">請款申請書</h3>
@@ -383,7 +386,7 @@
                                         <button type="submit" class="btn btn-green rounded-pill">匯款審核</button>
                                     </div>
                                 </div>
-                                
+
                             </form>
                     </div>
                     @endif

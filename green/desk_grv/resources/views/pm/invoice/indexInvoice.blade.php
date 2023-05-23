@@ -69,6 +69,7 @@
                                 <option value="grv_2">綠雷德</option>
                                 <option value="rv">閱野</option>
                                 <option value="grv">綠雷德(舊)</option>
+                                <option value="zd">州道</option>
                             </select>
                         </div>
                     </div>
@@ -153,6 +154,7 @@
                                 <option value="grv_2">綠雷德</option>
                                 <option value="rv">閱野</option>
                                 <option value="grv">綠雷德(舊)</option>
+                                <option value="zd">州道</option>
                             </select>
                         </div>
                         <div class="col-lg-12">
@@ -240,12 +242,12 @@
                             <button class="btn btn-red rounded-pill" data-toggle="modal" data-target="#downloadModal"><span class="mx-2">匯出資料</span></button>
                             <button class="btn btn-blue rounded-pill" onclick='tableToExcel()'><span class="mx-2">匯出 Excel</span></button>
                         </div>
-                        
+
 
                     </div>
                     <div class="col-lg-12 table-style-invoice ">
                         <table id="search-invoice">
-                            
+
                         </table>
                     </div>
 
@@ -408,7 +410,7 @@
                 HiddenDiv();
                 window.location = data
             },
-            error: function(XMLHttpRequest, textStatus) { 
+            error: function(XMLHttpRequest, textStatus) {
                 console.log(XMLHttpRequest.status);
                 console.log(XMLHttpRequest.readyState);
                 console.log(textStatus);
@@ -439,15 +441,15 @@
                 HiddenDiv();
                 window.location = data
             },
-            error: function(XMLHttpRequest, textStatus) { 
+            error: function(XMLHttpRequest, textStatus) {
                 console.log(XMLHttpRequest.status);
                 console.log(XMLHttpRequest.readyState);
                 console.log(textStatus);
-            
+
             }
         })
     }
-    
+
 </script>
 
 <script type="text/javascript">
@@ -787,7 +789,7 @@
     }
 
     function getNewInvoice() {
-        
+
         data = "{{$invoices}}"
         data = data.replace(/[\n\r]/g, "")
         data = JSON.parse(data.replace(/&quot;/g, '"'));
@@ -795,7 +797,7 @@
     }
 
     function getSomeNewInvoice() {
-        
+
         data = "{{$someInvoices}}"
         data = data.replace(/[\n\r]/g, "")
         data = JSON.parse(data.replace(/&quot;/g, '"'));
@@ -1027,7 +1029,7 @@
             var petty = ''
         }
 
-        var UserName = invoices[i].user['name'] 
+        var UserName = invoices[i].user['name']
 
         if((invoices[i].user['role']=='intern'||invoices[i].user['role'] == 'manager')&&invoices[i].intern_name != null){
             UserName = invoices[i].intern_name
@@ -1141,7 +1143,7 @@
         accountNames = [] //初始化
 
         for (var i = 0; i < invoices.length; i++) {
-            
+
             if (accountNames.indexOf(invoices[i]['bank_account_name']) == -1) {
                 if (accountTemp != '') {
                     if (invoices[i]['bank_account_name'].indexOf(accountTemp) != -1) {
@@ -1236,8 +1238,8 @@
             }, {
                 other: "其他"
             }]
-            excel.push([other_invoices[i]['finished_id'], other_invoices[i]['receipt_date'], other_invoices[i].user['name'], chinese[other_invoices[i]['type']], other_invoices[i]['company'], other_invoices[i]['title'], other_invoices[i]['content'], other_invoices[i]['price'], other_invoices[i]['bank'], other_invoices[i]['bank_branch'], other_invoices[i]['bank_account_number'], other_invoices[i]['bank_account_name'], isReceipt, isComplete, status[other_invoices[i]['status']], isPetty])
-        }
+            var pre_date = other_invoices[i]['receipt_date'] ? other_invoices[i]['receipt_date']: other_invoices[i]['receipt_date_paper']
+            excel.push([other_invoices[i]['finished_id'], pre_date, other_invoices[i].user['name'], chinese[other_invoices[i]['type']], other_invoices[i]['company'], other_invoices[i]['title'], other_invoices[i]['content'], other_invoices[i]['price'], other_invoices[i]['bank'], other_invoices[i]['bank_branch'], other_invoices[i]['bank_account_number'], other_invoices[i]['bank_account_name'], isReceipt, isComplete, status[other_invoices[i]['status']], isPetty])
         var filename = "請款表.xlsx";
 
         var ws_name = "工作表1";
@@ -1268,7 +1270,7 @@
     var accountOtherName = ""
     var other_review = ""
     //帳務
-    
+
 
 
     var accountOtherNames = []
@@ -1498,7 +1500,7 @@
 
     function getNewOtherInvoice() {
         data = "{{$otherInvoices}}"
-        
+
         data = data.replace(/[\n\r]/g, "")
         data = JSON.parse(data.replace(/&quot;/g, '"'));
         return data
@@ -1715,7 +1717,7 @@
             var petty = ''
         }
 
-        var UserName2 = other_invoices[i].user['name'] 
+        var UserName2 = other_invoices[i].user['name']
 
         if((other_invoices[i].user['role']=='intern'||other_invoices[i].user['role'] == 'manager')&&other_invoices[i].intern_name != null){
             UserName2 = other_invoices[i].intern_name
